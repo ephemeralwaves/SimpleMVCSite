@@ -6,8 +6,8 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: timbru31/node-chrome
+      # specify the version you desire here circleci/node:11.15
+      - image: circleci/node:11.15-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -33,8 +33,20 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - run:
+          name: Download Selenium
+          command: |
+            curl -O http://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.0.1.jar
+
+      - run:
+          name: Start Selenium
+          command: |
+            java -jar selenium-server-standalone-3.0.1.jar -log selenium.log
+          background: true
+
       # run tests!
       - run: npm test
+
       #- store_artifacts:
-      #    path: ~/repo/
+      #    path: ./artifacts
       #    destination: test_artifacts
