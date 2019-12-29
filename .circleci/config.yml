@@ -50,12 +50,14 @@ jobs:
       #- store_artifacts:
       #    path: ./artifacts
       #    destination: test_artifacts
-
   deploy:
+    machine:
+        enabled: true
     docker:
       - image: circleci/python:3.7-stretch
-    working_directory: ~/circleci-docs
+    working_directory: ~/repo
     steps:
+      - checkout
       - run:
           name: Install awscli
           command: sudo pip install awscli
