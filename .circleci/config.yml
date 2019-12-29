@@ -51,8 +51,6 @@ jobs:
       #    path: ./artifacts
       #    destination: test_artifacts
   deploy:
-    machine:
-        enabled: true
     docker:
       - image: circleci/python:3.7-stretch
     working_directory: ~/repo
